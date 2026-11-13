@@ -1,0 +1,1077 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:da="http://example.org/ontologies/degree-audit#"
+   xmlns:owl="http://www.w3.org/2002/07/owl#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+   xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Enr_Ayesha_DS301">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Enrollment"/>
+    <da:enrollmentOf rdf:resource="http://example.org/ontologies/degree-audit#Student_Ayesha"/>
+    <da:forCourse rdf:resource="http://example.org/ontologies/degree-audit#DS301"/>
+    <da:inSemester rdf:resource="http://example.org/ontologies/degree-audit#Sem_Fall2025"/>
+    <da:letterGrade>B+</da:letterGrade>
+    <da:passed rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</da:passed>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#RuleR2">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+    <rdfs:label>R2: failed enrollment means course must be retaken</rdfs:label>
+    <swrl:body rdf:nodeID="ndaf07baf51724372806a20f656787f94b58"/>
+    <swrl:head rdf:nodeID="ndaf07baf51724372806a20f656787f94b63"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Student_Hina">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <da:fullName>Hina</da:fullName>
+    <da:studentId>S003</da:studentId>
+    <da:cgpa rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2.3</da:cgpa>
+    <da:totalCreditsEarned rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">120</da:totalCreditsEarned>
+    <da:hasAdvisor rdf:resource="http://example.org/ontologies/degree-audit#Advisor_Siddiqui"/>
+    <da:enrolledInProgram rdf:resource="http://example.org/ontologies/degree-audit#Program_BSAI"/>
+    <da:hasEnrollment rdf:resource="http://example.org/ontologies/degree-audit#Enr_Hina_PF101"/>
+    <da:hasEnrollment rdf:resource="http://example.org/ontologies/degree-audit#Enr_Hina_OOP201"/>
+    <da:hasEnrollment rdf:resource="http://example.org/ontologies/degree-audit#Enr_Hina_DS301"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#r1_c">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#enrolledInProgram">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label>enrolled in program</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <rdfs:range rdf:resource="http://example.org/ontologies/degree-audit#Program"/>
+    <rdfs:comment>The degree program a student is enrolled in.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#hasAdvisor">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label>has advisor</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <rdfs:range rdf:resource="http://example.org/ontologies/degree-audit#Advisor"/>
+    <owl:inverseOf rdf:resource="http://example.org/ontologies/degree-audit#advises"/>
+    <rdfs:comment>Links a student to their academic advisor.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Enr_Bilal_PF101">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Enrollment"/>
+    <da:enrollmentOf rdf:resource="http://example.org/ontologies/degree-audit#Student_Bilal"/>
+    <da:forCourse rdf:resource="http://example.org/ontologies/degree-audit#PF101"/>
+    <da:inSemester rdf:resource="http://example.org/ontologies/degree-audit#Sem_Fall2024"/>
+    <da:letterGrade>F</da:letterGrade>
+    <da:passed rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</da:passed>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b54">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+    <swrl:argument1 rdf:resource="http://example.org/ontologies/degree-audit#r2_s"/>
+    <swrl:classPredicate rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#includesCourse">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>includes course</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Program"/>
+    <rdfs:range rdf:resource="http://example.org/ontologies/degree-audit#Course"/>
+    <rdfs:comment>A course that belongs to a program.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b10">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/ontologies/degree-audit#cgpa"/>
+    <owl:someValuesFrom rdf:nodeID="ndaf07baf51724372806a20f656787f94b11"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Enr_Maryam_MATH101">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Enrollment"/>
+    <da:enrollmentOf rdf:resource="http://example.org/ontologies/degree-audit#Student_Maryam"/>
+    <da:forCourse rdf:resource="http://example.org/ontologies/degree-audit#MATH101"/>
+    <da:inSemester rdf:resource="http://example.org/ontologies/degree-audit#Sem_Fall2025"/>
+    <da:letterGrade>A</da:letterGrade>
+    <da:passed rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</da:passed>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#hasCompleted">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>has completed</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <rdfs:range rdf:resource="http://example.org/ontologies/degree-audit#Course"/>
+    <rdfs:comment>Inferred by rule R1 when an enrollment was passed.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+    <rdfs:label>University Degree Audit and Compliance Ontology</rdfs:label>
+    <rdfs:comment>Models degree progress, prerequisites and academic standing for a BS Artificial Intelligence program. Course data is illustrative sample data.</rdfs:comment>
+    <owl:versionInfo>1.0</owl:versionInfo>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Student_Ayesha">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <da:fullName>Ayesha</da:fullName>
+    <da:studentId>S001</da:studentId>
+    <da:cgpa rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3.7</da:cgpa>
+    <da:totalCreditsEarned rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">96</da:totalCreditsEarned>
+    <da:hasAdvisor rdf:resource="http://example.org/ontologies/degree-audit#Advisor_Khan"/>
+    <da:enrolledInProgram rdf:resource="http://example.org/ontologies/degree-audit#Program_BSAI"/>
+    <da:hasEnrollment rdf:resource="http://example.org/ontologies/degree-audit#Enr_Ayesha_PF101"/>
+    <da:hasEnrollment rdf:resource="http://example.org/ontologies/degree-audit#Enr_Ayesha_OOP201"/>
+    <da:hasEnrollment rdf:resource="http://example.org/ontologies/degree-audit#Enr_Ayesha_DS301"/>
+    <da:hasEnrollment rdf:resource="http://example.org/ontologies/degree-audit#Enr_Ayesha_MATH101"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Advisor_Siddiqui">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Advisor"/>
+    <da:fullName>Siddiqui</da:fullName>
+    <da:worksIn rdf:resource="http://example.org/ontologies/degree-audit#Dept_ComputerScience"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#ETH101">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#ElectiveCourse"/>
+    <rdfs:label>Ethics in Computing</rdfs:label>
+    <da:courseCode>ETH101</da:courseCode>
+    <da:courseTitle>Ethics in Computing</da:courseTitle>
+    <da:creditHours rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</da:creditHours>
+    <da:offeredBy rdf:resource="http://example.org/ontologies/degree-audit#Dept_ComputerScience"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b59">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b55"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b60"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Student_Maryam">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <da:fullName>Maryam</da:fullName>
+    <da:studentId>S005</da:studentId>
+    <da:cgpa rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3.9</da:cgpa>
+    <da:totalCreditsEarned rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">30</da:totalCreditsEarned>
+    <da:hasAdvisor rdf:resource="http://example.org/ontologies/degree-audit#Advisor_Siddiqui"/>
+    <da:enrolledInProgram rdf:resource="http://example.org/ontologies/degree-audit#Program_BSAI"/>
+    <da:hasEnrollment rdf:resource="http://example.org/ontologies/degree-audit#Enr_Maryam_PF101"/>
+    <da:hasEnrollment rdf:resource="http://example.org/ontologies/degree-audit#Enr_Maryam_MATH101"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b2">
+    <rdf:first rdf:resource="http://example.org/ontologies/degree-audit#Person"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b3"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b45">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+    <swrl:argument1 rdf:resource="http://example.org/ontologies/degree-audit#r1_s"/>
+    <swrl:argument2 rdf:resource="http://example.org/ontologies/degree-audit#r1_e"/>
+    <swrl:propertyPredicate rdf:resource="http://example.org/ontologies/degree-audit#hasEnrollment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#mustRetake">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>must retake</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <rdfs:range rdf:resource="http://example.org/ontologies/degree-audit#Course"/>
+    <rdfs:comment>Inferred by rule R2 when an enrollment was failed.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#DS301">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#CoreCourse"/>
+    <rdfs:label>Data Structures</rdfs:label>
+    <da:courseCode>DS301</da:courseCode>
+    <da:courseTitle>Data Structures</da:courseTitle>
+    <da:creditHours rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</da:creditHours>
+    <da:offeredBy rdf:resource="http://example.org/ontologies/degree-audit#Dept_ComputerScience"/>
+    <da:hasPrerequisite rdf:resource="http://example.org/ontologies/degree-audit#OOP201"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b7">
+    <rdf:first rdf:resource="http://example.org/ontologies/degree-audit#Enrollment"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b8"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b55">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+    <swrl:argument1 rdf:resource="http://example.org/ontologies/degree-audit#r2_s"/>
+    <swrl:argument2 rdf:resource="http://example.org/ontologies/degree-audit#r2_e"/>
+    <swrl:propertyPredicate rdf:resource="http://example.org/ontologies/degree-audit#hasEnrollment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#ProbationStudent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Probation Student</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <rdfs:comment>Defined class: a student with CGPA below 2.0.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="ndaf07baf51724372806a20f656787f94b9"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Student">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Student</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/ontologies/degree-audit#Person"/>
+    <rdfs:comment>A student enrolled in a degree program.</rdfs:comment>
+    <owl:disjointWith rdf:resource="http://example.org/ontologies/degree-audit#Advisor"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Enr_Ayesha_PF101">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Enrollment"/>
+    <da:enrollmentOf rdf:resource="http://example.org/ontologies/degree-audit#Student_Ayesha"/>
+    <da:forCourse rdf:resource="http://example.org/ontologies/degree-audit#PF101"/>
+    <da:inSemester rdf:resource="http://example.org/ontologies/degree-audit#Sem_Fall2024"/>
+    <da:letterGrade>A</da:letterGrade>
+    <da:passed rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</da:passed>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Program">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Program</rdfs:label>
+    <rdfs:comment>A degree program such as BS Artificial Intelligence.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#requiresCourse">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+    <rdfs:label>requires course</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Course"/>
+    <rdfs:range rdf:resource="http://example.org/ontologies/degree-audit#Course"/>
+    <rdfs:comment>Transitive prerequisite relation between courses.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#NLP410">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#ElectiveCourse"/>
+    <rdfs:label>Natural Language Processing</rdfs:label>
+    <da:courseCode>NLP410</da:courseCode>
+    <da:courseTitle>Natural Language Processing</da:courseTitle>
+    <da:creditHours rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</da:creditHours>
+    <da:offeredBy rdf:resource="http://example.org/ontologies/degree-audit#Dept_ComputerScience"/>
+    <da:hasPrerequisite rdf:resource="http://example.org/ontologies/degree-audit#ML402"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#enrollmentOf">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>enrollment of</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Enrollment"/>
+    <rdfs:range rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <owl:inverseOf rdf:resource="http://example.org/ontologies/degree-audit#hasEnrollment"/>
+    <rdfs:comment>Links an enrollment to its student.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Enr_Hina_DS301">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Enrollment"/>
+    <da:enrollmentOf rdf:resource="http://example.org/ontologies/degree-audit#Student_Hina"/>
+    <da:forCourse rdf:resource="http://example.org/ontologies/degree-audit#DS301"/>
+    <da:inSemester rdf:resource="http://example.org/ontologies/degree-audit#Sem_Fall2025"/>
+    <da:letterGrade>F</da:letterGrade>
+    <da:passed rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</da:passed>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#managedBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>managed by</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Program"/>
+    <rdfs:range rdf:resource="http://example.org/ontologies/degree-audit#Department"/>
+    <rdfs:comment>The department that manages a program.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#courseTitle">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label>course title</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Course"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:comment>Course title.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#passed">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label>passed</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Enrollment"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:comment>Whether the enrollment was passed.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b46">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+    <swrl:argument1 rdf:resource="http://example.org/ontologies/degree-audit#r1_e"/>
+    <swrl:argument2 rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrl:argument2>
+    <swrl:propertyPredicate rdf:resource="http://example.org/ontologies/degree-audit#passed"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#minCreditsToGraduate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label>minimum credits to graduate</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Program"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <rdfs:comment>Program graduation threshold for credits.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b17">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/ontologies/degree-audit#cgpa"/>
+    <owl:someValuesFrom rdf:nodeID="ndaf07baf51724372806a20f656787f94b18"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Department">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Department</rdfs:label>
+    <rdfs:comment>An academic department.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#satisfiedByCourse">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>satisfied by course</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Requirement"/>
+    <rdfs:range rdf:resource="http://example.org/ontologies/degree-audit#Course"/>
+    <rdfs:comment>A course that can satisfy a requirement.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Enr_Hina_PF101">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Enrollment"/>
+    <da:enrollmentOf rdf:resource="http://example.org/ontologies/degree-audit#Student_Hina"/>
+    <da:forCourse rdf:resource="http://example.org/ontologies/degree-audit#PF101"/>
+    <da:inSemester rdf:resource="http://example.org/ontologies/degree-audit#Sem_Fall2024"/>
+    <da:letterGrade>B</da:letterGrade>
+    <da:passed rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</da:passed>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b14">
+    <rdf:first rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b15"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#fullName">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label>full name</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Person"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:comment>Display name of a person.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#ML402">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#CoreCourse"/>
+    <rdfs:label>Machine Learning</rdfs:label>
+    <da:courseCode>ML402</da:courseCode>
+    <da:courseTitle>Machine Learning</da:courseTitle>
+    <da:creditHours rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</da:creditHours>
+    <da:offeredBy rdf:resource="http://example.org/ontologies/degree-audit#Dept_ComputerScience"/>
+    <da:hasPrerequisite rdf:resource="http://example.org/ontologies/degree-audit#AI401"/>
+    <da:hasPrerequisite rdf:resource="http://example.org/ontologies/degree-audit#LA201"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Enrollment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Enrollment</rdfs:label>
+    <rdfs:comment>One student taking one course in one semester; carries the grade.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#affiliatedWith">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>affiliated with</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <rdfs:range rdf:resource="http://example.org/ontologies/degree-audit#Department"/>
+    <rdfs:comment>Inferred by rule R4 through the student's advisor.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#studentId">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label>student ID</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:comment>University identifier of a student.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b36">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b35"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Enr_Ayesha_MATH101">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Enrollment"/>
+    <da:enrollmentOf rdf:resource="http://example.org/ontologies/degree-audit#Student_Ayesha"/>
+    <da:forCourse rdf:resource="http://example.org/ontologies/degree-audit#MATH101"/>
+    <da:inSemester rdf:resource="http://example.org/ontologies/degree-audit#Sem_Fall2024"/>
+    <da:letterGrade>A</da:letterGrade>
+    <da:passed rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</da:passed>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#minCgpaToGraduate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label>minimum CGPA to graduate</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Program"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <rdfs:comment>Program graduation threshold for CGPA.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#creditHours">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label>credit hours</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Course"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <rdfs:comment>Credit hours of a course.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Enr_Maryam_PF101">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Enrollment"/>
+    <da:enrollmentOf rdf:resource="http://example.org/ontologies/degree-audit#Student_Maryam"/>
+    <da:forCourse rdf:resource="http://example.org/ontologies/degree-audit#PF101"/>
+    <da:inSemester rdf:resource="http://example.org/ontologies/degree-audit#Sem_Fall2025"/>
+    <da:letterGrade>A</da:letterGrade>
+    <da:passed rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</da:passed>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b18">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:withRestrictions rdf:nodeID="ndaf07baf51724372806a20f656787f94b21"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#courseCode">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label>course code</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Course"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:comment>Catalogue code such as PF101.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Program_BSAI">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Program"/>
+    <rdfs:label>BS Artificial Intelligence</rdfs:label>
+    <da:minCreditsToGraduate rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">130</da:minCreditsToGraduate>
+    <da:minCgpaToGraduate rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2.0</da:minCgpaToGraduate>
+    <da:managedBy rdf:resource="http://example.org/ontologies/degree-audit#Dept_ComputerScience"/>
+    <da:hasRequirement rdf:resource="http://example.org/ontologies/degree-audit#Req_Core"/>
+    <da:hasRequirement rdf:resource="http://example.org/ontologies/degree-audit#Req_Elective"/>
+    <da:includesCourse rdf:resource="http://example.org/ontologies/degree-audit#PF101"/>
+    <da:includesCourse rdf:resource="http://example.org/ontologies/degree-audit#OOP201"/>
+    <da:includesCourse rdf:resource="http://example.org/ontologies/degree-audit#DS301"/>
+    <da:includesCourse rdf:resource="http://example.org/ontologies/degree-audit#DB301"/>
+    <da:includesCourse rdf:resource="http://example.org/ontologies/degree-audit#AI401"/>
+    <da:includesCourse rdf:resource="http://example.org/ontologies/degree-audit#MATH101"/>
+    <da:includesCourse rdf:resource="http://example.org/ontologies/degree-audit#LA201"/>
+    <da:includesCourse rdf:resource="http://example.org/ontologies/degree-audit#ML402"/>
+    <da:includesCourse rdf:resource="http://example.org/ontologies/degree-audit#ETH101"/>
+    <da:includesCourse rdf:resource="http://example.org/ontologies/degree-audit#NLP410"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Advisor">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Advisor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/ontologies/degree-audit#Person"/>
+    <rdfs:comment>An academic advisor.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Student_Zain">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <da:fullName>Zain</da:fullName>
+    <da:studentId>S004</da:studentId>
+    <da:cgpa rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3.0</da:cgpa>
+    <da:totalCreditsEarned rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">132</da:totalCreditsEarned>
+    <da:hasAdvisor rdf:resource="http://example.org/ontologies/degree-audit#Advisor_Siddiqui"/>
+    <da:enrolledInProgram rdf:resource="http://example.org/ontologies/degree-audit#Program_BSAI"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#RuleR1">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+    <rdfs:label>R1: passed enrollment means completed course</rdfs:label>
+    <swrl:body rdf:nodeID="ndaf07baf51724372806a20f656787f94b48"/>
+    <swrl:head rdf:nodeID="ndaf07baf51724372806a20f656787f94b53"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b26">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/ontologies/degree-audit#cgpa"/>
+    <owl:someValuesFrom rdf:nodeID="ndaf07baf51724372806a20f656787f94b27"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#hasPrerequisite">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AsymmetricProperty"/>
+    <rdfs:label>has prerequisite</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="http://example.org/ontologies/degree-audit#requiresCourse"/>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Course"/>
+    <rdfs:range rdf:resource="http://example.org/ontologies/degree-audit#Course"/>
+    <rdfs:comment>Direct prerequisite of a course. The reasoner derives the transitive chain through requiresCourse.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b68">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+    <swrl:argument1 rdf:resource="http://example.org/ontologies/degree-audit#r3_s"/>
+    <swrl:argument2 rdf:resource="http://example.org/ontologies/degree-audit#r3_a"/>
+    <swrl:propertyPredicate rdf:resource="http://example.org/ontologies/degree-audit#needsAdvisorMeeting"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#PF101">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#CoreCourse"/>
+    <rdfs:label>Programming Fundamentals</rdfs:label>
+    <da:courseCode>PF101</da:courseCode>
+    <da:courseTitle>Programming Fundamentals</da:courseTitle>
+    <da:creditHours rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</da:creditHours>
+    <da:offeredBy rdf:resource="http://example.org/ontologies/degree-audit#Dept_ComputerScience"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b28">
+    <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3.5</xsd:minInclusive>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b9">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="ndaf07baf51724372806a20f656787f94b14"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b31">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b26"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#AI401">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#CoreCourse"/>
+    <rdfs:label>Introduction to AI</rdfs:label>
+    <da:courseCode>AI401</da:courseCode>
+    <da:courseTitle>Introduction to AI</da:courseTitle>
+    <da:creditHours rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</da:creditHours>
+    <da:offeredBy rdf:resource="http://example.org/ontologies/degree-audit#Dept_ComputerScience"/>
+    <da:hasPrerequisite rdf:resource="http://example.org/ontologies/degree-audit#DS301"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b42">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b33"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b43"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b61">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b57"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b44">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+    <swrl:argument1 rdf:resource="http://example.org/ontologies/degree-audit#r1_s"/>
+    <swrl:classPredicate rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#AtRiskStudent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>At Risk Student</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <rdfs:comment>Defined class: a student with CGPA from 2.0 up to (not including) 2.5.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="ndaf07baf51724372806a20f656787f94b16"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#advises">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>advises</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Advisor"/>
+    <rdfs:range rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <owl:inverseOf rdf:resource="http://example.org/ontologies/degree-audit#hasAdvisor"/>
+    <rdfs:comment>Links an advisor to the students they advise.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#OOP201">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#CoreCourse"/>
+    <rdfs:label>Object-Oriented Programming</rdfs:label>
+    <da:courseCode>OOP201</da:courseCode>
+    <da:courseTitle>Object-Oriented Programming</da:courseTitle>
+    <da:creditHours rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</da:creditHours>
+    <da:offeredBy rdf:resource="http://example.org/ontologies/degree-audit#Dept_ComputerScience"/>
+    <da:hasPrerequisite rdf:resource="http://example.org/ontologies/degree-audit#PF101"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Enr_Bilal_MATH101">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Enrollment"/>
+    <da:enrollmentOf rdf:resource="http://example.org/ontologies/degree-audit#Student_Bilal"/>
+    <da:forCourse rdf:resource="http://example.org/ontologies/degree-audit#MATH101"/>
+    <da:inSemester rdf:resource="http://example.org/ontologies/degree-audit#Sem_Fall2024"/>
+    <da:letterGrade>C</da:letterGrade>
+    <da:passed rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</da:passed>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Req_Core">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Requirement"/>
+    <rdfs:label>Core requirement</rdfs:label>
+    <da:requiredCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">24</da:requiredCredits>
+    <da:satisfiedByCourse rdf:resource="http://example.org/ontologies/degree-audit#PF101"/>
+    <da:satisfiedByCourse rdf:resource="http://example.org/ontologies/degree-audit#OOP201"/>
+    <da:satisfiedByCourse rdf:resource="http://example.org/ontologies/degree-audit#DS301"/>
+    <da:satisfiedByCourse rdf:resource="http://example.org/ontologies/degree-audit#DB301"/>
+    <da:satisfiedByCourse rdf:resource="http://example.org/ontologies/degree-audit#AI401"/>
+    <da:satisfiedByCourse rdf:resource="http://example.org/ontologies/degree-audit#MATH101"/>
+    <da:satisfiedByCourse rdf:resource="http://example.org/ontologies/degree-audit#LA201"/>
+    <da:satisfiedByCourse rdf:resource="http://example.org/ontologies/degree-audit#ML402"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b72">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+    <swrl:argument1 rdf:resource="http://example.org/ontologies/degree-audit#r4_a"/>
+    <swrl:argument2 rdf:resource="http://example.org/ontologies/degree-audit#r4_d"/>
+    <swrl:propertyPredicate rdf:resource="http://example.org/ontologies/degree-audit#worksIn"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b37">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/ontologies/degree-audit#totalCreditsEarned"/>
+    <owl:someValuesFrom rdf:nodeID="ndaf07baf51724372806a20f656787f94b38"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b34">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:withRestrictions rdf:nodeID="ndaf07baf51724372806a20f656787f94b36"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Enr_Ayesha_OOP201">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Enrollment"/>
+    <da:enrollmentOf rdf:resource="http://example.org/ontologies/degree-audit#Student_Ayesha"/>
+    <da:forCourse rdf:resource="http://example.org/ontologies/degree-audit#OOP201"/>
+    <da:inSemester rdf:resource="http://example.org/ontologies/degree-audit#Sem_Spring2025"/>
+    <da:letterGrade>A-</da:letterGrade>
+    <da:passed rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</da:passed>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b4">
+    <rdf:first rdf:resource="http://example.org/ontologies/degree-audit#Program"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b5"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Sem_Fall2025">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Semester"/>
+    <da:semesterName>Fall 2025</da:semesterName>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b73">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b70"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b74"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b41">
+    <rdf:first rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b42"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b11">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:withRestrictions rdf:nodeID="ndaf07baf51724372806a20f656787f94b13"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#GraduationEligibleStudent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Graduation Eligible Student</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <rdfs:comment>Defined class: a student with CGPA of at least 2.0 and at least 130 earned credits.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="ndaf07baf51724372806a20f656787f94b32"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b67">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b65"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b71">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+    <swrl:argument1 rdf:resource="http://example.org/ontologies/degree-audit#r4_s"/>
+    <swrl:argument2 rdf:resource="http://example.org/ontologies/degree-audit#r4_a"/>
+    <swrl:propertyPredicate rdf:resource="http://example.org/ontologies/degree-audit#hasAdvisor"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#worksIn">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>works in</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Advisor"/>
+    <rdfs:range rdf:resource="http://example.org/ontologies/degree-audit#Department"/>
+    <rdfs:comment>The department an advisor works in.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b76">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+    <swrl:argument1 rdf:resource="http://example.org/ontologies/degree-audit#r4_s"/>
+    <swrl:argument2 rdf:resource="http://example.org/ontologies/degree-audit#r4_d"/>
+    <swrl:propertyPredicate rdf:resource="http://example.org/ontologies/degree-audit#affiliatedWith"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b47">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+    <swrl:argument1 rdf:resource="http://example.org/ontologies/degree-audit#r1_e"/>
+    <swrl:argument2 rdf:resource="http://example.org/ontologies/degree-audit#r1_c"/>
+    <swrl:propertyPredicate rdf:resource="http://example.org/ontologies/degree-audit#forCourse"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#DB301">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#CoreCourse"/>
+    <rdfs:label>Databases</rdfs:label>
+    <da:courseCode>DB301</da:courseCode>
+    <da:courseTitle>Databases</da:courseTitle>
+    <da:creditHours rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</da:creditHours>
+    <da:offeredBy rdf:resource="http://example.org/ontologies/degree-audit#Dept_ComputerScience"/>
+    <da:hasPrerequisite rdf:resource="http://example.org/ontologies/degree-audit#OOP201"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#forCourse">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label>for course</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Enrollment"/>
+    <rdfs:range rdf:resource="http://example.org/ontologies/degree-audit#Course"/>
+    <rdfs:comment>The course of an enrollment.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b1">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+    <owl:members rdf:nodeID="ndaf07baf51724372806a20f656787f94b2"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#semesterName">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label>semester name</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Semester"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:comment>Human-readable semester name.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b23">
+    <rdf:first rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b24"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Dept_ComputerScience">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Department"/>
+    <rdfs:label>Department of Computer Science</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#offeredBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>offered by</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Course"/>
+    <rdfs:range rdf:resource="http://example.org/ontologies/degree-audit#Department"/>
+    <rdfs:comment>The department that offers a course.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b74">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b71"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b75"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Req_Elective">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Requirement"/>
+    <rdfs:label>Elective requirement</rdfs:label>
+    <da:requiredCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</da:requiredCredits>
+    <da:satisfiedByCourse rdf:resource="http://example.org/ontologies/degree-audit#ETH101"/>
+    <da:satisfiedByCourse rdf:resource="http://example.org/ontologies/degree-audit#NLP410"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#requiredCredits">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label>required credits</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Requirement"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <rdfs:comment>Credits required by a requirement block.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#ElectiveCourse">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Elective Course</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/ontologies/degree-audit#Course"/>
+    <rdfs:comment>An optional course in a program.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b25">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="ndaf07baf51724372806a20f656787f94b30"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Enr_Hina_OOP201">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Enrollment"/>
+    <da:enrollmentOf rdf:resource="http://example.org/ontologies/degree-audit#Student_Hina"/>
+    <da:forCourse rdf:resource="http://example.org/ontologies/degree-audit#OOP201"/>
+    <da:inSemester rdf:resource="http://example.org/ontologies/degree-audit#Sem_Spring2025"/>
+    <da:letterGrade>C</da:letterGrade>
+    <da:passed rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</da:passed>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#cgpa">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label>CGPA</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <rdfs:comment>Cumulative grade point average on a 4.0 scale.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Course">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Course</rdfs:label>
+    <rdfs:comment>A course in the university catalogue.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b22">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b20"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#letterGrade">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label>letter grade</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Enrollment"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:comment>Letter grade of an enrollment.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#CoreCourse">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Core Course</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/ontologies/degree-audit#Course"/>
+    <rdfs:comment>A mandatory course in a program.</rdfs:comment>
+    <owl:disjointWith rdf:resource="http://example.org/ontologies/degree-audit#ElectiveCourse"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b38">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <owl:withRestrictions rdf:nodeID="ndaf07baf51724372806a20f656787f94b40"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b58">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b54"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b59"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b53">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b52"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b27">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:withRestrictions rdf:nodeID="ndaf07baf51724372806a20f656787f94b29"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#hasRequirement">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>has requirement</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Program"/>
+    <rdfs:range rdf:resource="http://example.org/ontologies/degree-audit#Requirement"/>
+    <rdfs:comment>A requirement block of a program.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#inSemester">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label>in semester</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Enrollment"/>
+    <rdfs:range rdf:resource="http://example.org/ontologies/degree-audit#Semester"/>
+    <rdfs:comment>The semester of an enrollment.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b50">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b46"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b51"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#RuleR4">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+    <rdfs:label>R4: student is affiliated with the advisor's department</rdfs:label>
+    <swrl:body rdf:nodeID="ndaf07baf51724372806a20f656787f94b73"/>
+    <swrl:head rdf:nodeID="ndaf07baf51724372806a20f656787f94b77"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Semester">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Semester</rdfs:label>
+    <rdfs:comment>A teaching term.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#MATH101">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#CoreCourse"/>
+    <rdfs:label>Calculus</rdfs:label>
+    <da:courseCode>MATH101</da:courseCode>
+    <da:courseTitle>Calculus</da:courseTitle>
+    <da:creditHours rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</da:creditHours>
+    <da:offeredBy rdf:resource="http://example.org/ontologies/degree-audit#Dept_ComputerScience"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#DeansListStudent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Dean's List Student</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <rdfs:comment>Defined class: a student with CGPA of at least 3.5.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="ndaf07baf51724372806a20f656787f94b25"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Advisor_Khan">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Advisor"/>
+    <da:fullName>Khan</da:fullName>
+    <da:worksIn rdf:resource="http://example.org/ontologies/degree-audit#Dept_ComputerScience"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#r4_d">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b52">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+    <swrl:argument1 rdf:resource="http://example.org/ontologies/degree-audit#r1_s"/>
+    <swrl:argument2 rdf:resource="http://example.org/ontologies/degree-audit#r1_c"/>
+    <swrl:propertyPredicate rdf:resource="http://example.org/ontologies/degree-audit#hasCompleted"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b33">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/ontologies/degree-audit#cgpa"/>
+    <owl:someValuesFrom rdf:nodeID="ndaf07baf51724372806a20f656787f94b34"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b3">
+    <rdf:first rdf:resource="http://example.org/ontologies/degree-audit#Department"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b4"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#LA201">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#CoreCourse"/>
+    <rdfs:label>Linear Algebra</rdfs:label>
+    <da:courseCode>LA201</da:courseCode>
+    <da:courseTitle>Linear Algebra</da:courseTitle>
+    <da:creditHours rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</da:creditHours>
+    <da:offeredBy rdf:resource="http://example.org/ontologies/degree-audit#Dept_ComputerScience"/>
+    <da:hasPrerequisite rdf:resource="http://example.org/ontologies/degree-audit#MATH101"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b77">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b76"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Person">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Person</rdfs:label>
+    <rdfs:comment>Any person in the university.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b64">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+    <swrl:argument1 rdf:resource="http://example.org/ontologies/degree-audit#r3_s"/>
+    <swrl:classPredicate rdf:resource="http://example.org/ontologies/degree-audit#ProbationStudent"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b43">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b37"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Student_Bilal">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <da:fullName>Bilal</da:fullName>
+    <da:studentId>S002</da:studentId>
+    <da:cgpa rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.8</da:cgpa>
+    <da:totalCreditsEarned rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">60</da:totalCreditsEarned>
+    <da:hasAdvisor rdf:resource="http://example.org/ontologies/degree-audit#Advisor_Khan"/>
+    <da:enrolledInProgram rdf:resource="http://example.org/ontologies/degree-audit#Program_BSAI"/>
+    <da:hasEnrollment rdf:resource="http://example.org/ontologies/degree-audit#Enr_Bilal_PF101"/>
+    <da:hasEnrollment rdf:resource="http://example.org/ontologies/degree-audit#Enr_Bilal_MATH101"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b57">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+    <swrl:argument1 rdf:resource="http://example.org/ontologies/degree-audit#r2_e"/>
+    <swrl:argument2 rdf:resource="http://example.org/ontologies/degree-audit#r2_c"/>
+    <swrl:propertyPredicate rdf:resource="http://example.org/ontologies/degree-audit#forCourse"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b6">
+    <rdf:first rdf:resource="http://example.org/ontologies/degree-audit#Semester"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b7"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b12">
+    <xsd:maxExclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2.0</xsd:maxExclusive>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b13">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b12"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b66">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b64"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b67"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b29">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b28"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b56">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+    <swrl:argument1 rdf:resource="http://example.org/ontologies/degree-audit#r2_e"/>
+    <swrl:argument2 rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</swrl:argument2>
+    <swrl:propertyPredicate rdf:resource="http://example.org/ontologies/degree-audit#passed"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b49">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b45"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b50"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Sem_Spring2025">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Semester"/>
+    <da:semesterName>Spring 2025</da:semesterName>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Sem_Fall2024">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://example.org/ontologies/degree-audit#Semester"/>
+    <da:semesterName>Fall 2024</da:semesterName>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#totalCreditsEarned">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:label>total credits earned</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <rdfs:comment>Credits earned so far.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#Requirement">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Requirement</rdfs:label>
+    <rdfs:comment>A rule block of a program, for example core credits.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#r2_c">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b69">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b68"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b40">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b39"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b8">
+    <rdf:first rdf:resource="http://example.org/ontologies/degree-audit#Requirement"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b48">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b44"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b49"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#r2_e">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b32">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="ndaf07baf51724372806a20f656787f94b41"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#r3_s">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b62">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+    <swrl:argument1 rdf:resource="http://example.org/ontologies/degree-audit#r2_s"/>
+    <swrl:argument2 rdf:resource="http://example.org/ontologies/degree-audit#r2_c"/>
+    <swrl:propertyPredicate rdf:resource="http://example.org/ontologies/degree-audit#mustRetake"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b51">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b47"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b19">
+    <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2.0</xsd:minInclusive>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#RuleR3">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+    <rdfs:label>R3: probation student needs an advisor meeting</rdfs:label>
+    <swrl:body rdf:nodeID="ndaf07baf51724372806a20f656787f94b66"/>
+    <swrl:head rdf:nodeID="ndaf07baf51724372806a20f656787f94b69"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b16">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="ndaf07baf51724372806a20f656787f94b23"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b63">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b62"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#r1_s">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#r1_e">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b39">
+    <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">130</xsd:minInclusive>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#r4_a">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b65">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+    <swrl:argument1 rdf:resource="http://example.org/ontologies/degree-audit#r3_s"/>
+    <swrl:argument2 rdf:resource="http://example.org/ontologies/degree-audit#r3_a"/>
+    <swrl:propertyPredicate rdf:resource="http://example.org/ontologies/degree-audit#hasAdvisor"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#hasEnrollment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>has enrollment</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <rdfs:range rdf:resource="http://example.org/ontologies/degree-audit#Enrollment"/>
+    <owl:inverseOf rdf:resource="http://example.org/ontologies/degree-audit#enrollmentOf"/>
+    <rdfs:comment>Links a student to one of their enrollments.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#needsAdvisorMeeting">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label>needs advisor meeting</rdfs:label>
+    <rdfs:domain rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <rdfs:range rdf:resource="http://example.org/ontologies/degree-audit#Advisor"/>
+    <rdfs:comment>Inferred by rule R3 for students on probation.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b24">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b17"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b30">
+    <rdf:first rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b31"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#r3_a">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b21">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b19"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b22"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b5">
+    <rdf:first rdf:resource="http://example.org/ontologies/degree-audit#Course"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b6"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b70">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+    <swrl:argument1 rdf:resource="http://example.org/ontologies/degree-audit#r4_s"/>
+    <swrl:classPredicate rdf:resource="http://example.org/ontologies/degree-audit#Student"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b75">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b72"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b20">
+    <xsd:maxExclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2.5</xsd:maxExclusive>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b60">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b56"/>
+    <rdf:rest rdf:nodeID="ndaf07baf51724372806a20f656787f94b61"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b15">
+    <rdf:first rdf:nodeID="ndaf07baf51724372806a20f656787f94b10"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#r4_s">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ndaf07baf51724372806a20f656787f94b35">
+    <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2.0</xsd:minInclusive>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/ontologies/degree-audit#r2_s">
+    <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+  </rdf:Description>
+</rdf:RDF>

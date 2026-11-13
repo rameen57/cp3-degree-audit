@@ -1,0 +1,93 @@
+# University Degree Audit and Compliance Ontology
+# Competency questions CQ1-CQ8
+#
+# Every query runs on the asserted data, so it works in Protege's SPARQL Query
+# tab and in rdflib without a reasoner. Use this prefix block for all queries.
+
+PREFIX da: <http://example.org/ontologies/degree-audit#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+
+# CQ1 - What are all direct and indirect prerequisites of ML402?
+# Expected: AI401, LA201, DS301, OOP201, PF101, MATH101
+SELECT DISTINCT ?p WHERE {
+    da:ML402 da:hasPrerequisite+ ?p .
+}
+ORDER BY ?p
+
+
+# CQ2 - Which courses has Ayesha passed?
+# Expected: PF101, OOP201, DS301, MATH101
+SELECT DISTINCT ?course WHERE {
+    da:Student_Ayesha da:hasEnrollment ?e .
+    ?e da:forCourse ?course ;
+       da:passed true .
+}
+ORDER BY ?course
+
+
+# CQ3 - Which courses can Ayesha take next?
+# Expected: DB301, AI401, LA201, ETH101
+SELECT DISTINCT ?c WHERE {
+    ?c a/rdfs:subClassOf* da:Course .
+    FILTER NOT EXISTS {
+        da:Student_Ayesha da:hasEnrollment ?e0 .
+        ?e0 da:forCourse ?c ;
+            da:passed true .
+    }
+    FILTER NOT EXISTS {
+        ?c da:hasPrerequisite ?p .
+        FILTER NOT EXISTS {
+            da:Student_Ayesha da:hasEnrollment ?e .
+            ?e da:forCourse ?p ;
+               da:passed true .
+        }
+    }
+}
+ORDER BY ?c
+
+
+# CQ4 - Which students have a CGPA below 2.0 (probation)?
+# Expected: Student_Bilal (1.8)
+SELECT ?s ?cgpa WHERE {
+    ?s a da:Student ;
+       da:cgpa ?cgpa .
+    FILTER(?cgpa < 2.0)
+}
+
+
+# CQ5 - How many credits does each student still need?
+# Expected: Ayesha 34, Bilal 70, Hina 10, Zain 0, Maryam 100
+SELECT ?s (IF(?min > ?c, ?min - ?c, 0) AS ?creditsRemaining) WHERE {
+    ?s a da:Student ;
+       da:totalCreditsEarned ?c ;
+       da:enrolledInProgram ?p .
+    ?p da:minCreditsToGraduate ?min .
+}
+
+
+# CQ6 - Which students failed which courses?
+# Expected: Bilal: PF101; Hina: DS301
+SELECT ?s ?course WHERE {
+    ?s da:hasEnrollment ?e .
+    ?e da:passed false ;
+       da:forCourse ?course .
+}
+
+
+# CQ7 - How many probation students does each advisor have?
+# Expected: Advisor_Khan: 1
+SELECT ?a (COUNT(?s) AS ?n) WHERE {
+    ?s da:cgpa ?g ;
+       da:hasAdvisor ?a .
+    FILTER(?g < 2.0)
+} GROUP BY ?a
+
+
+# CQ8 - Which courses unlock the most later courses?
+# Expected: PF101 (6), then OOP201 (5)
+SELECT ?p (COUNT(DISTINCT ?c) AS ?unlocks) WHERE {
+    ?c da:hasPrerequisite+ ?p .
+} GROUP BY ?p ORDER BY DESC(?unlocks)

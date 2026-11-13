@@ -1,0 +1,33 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Degreely app (Streamlit)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "streamlit",
+      "args": [
+        "run",
+        "app/app.py"
+      ],
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Degree audit MCP server",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/agent/mcp_server.py",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Run CQ1-CQ8",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/run_queries.py",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    }
+  ]
+}

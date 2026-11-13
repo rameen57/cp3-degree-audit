@@ -1,0 +1,730 @@
+@prefix da: <http://example.org/ontologies/degree-audit#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/ontologies/degree-audit> a owl:Ontology ;
+    rdfs:label "University Degree Audit and Compliance Ontology" ;
+    rdfs:comment "Models degree progress, prerequisites and academic standing for a BS Artificial Intelligence program. Course data is illustrative sample data." ;
+    owl:versionInfo "1.0" .
+
+############################################################
+# Classes (15: 11 asserted, 4 defined)
+############################################################
+
+da:Person a owl:Class ;
+    rdfs:label "Person" ;
+    rdfs:comment "Any person in the university." .
+
+da:Student a owl:Class ;
+    rdfs:label "Student" ;
+    rdfs:subClassOf da:Person ;
+    rdfs:comment "A student enrolled in a degree program." .
+
+da:Advisor a owl:Class ;
+    rdfs:label "Advisor" ;
+    rdfs:subClassOf da:Person ;
+    rdfs:comment "An academic advisor." .
+
+da:Department a owl:Class ;
+    rdfs:label "Department" ;
+    rdfs:comment "An academic department." .
+
+da:Program a owl:Class ;
+    rdfs:label "Program" ;
+    rdfs:comment "A degree program such as BS Artificial Intelligence." .
+
+da:Course a owl:Class ;
+    rdfs:label "Course" ;
+    rdfs:comment "A course in the university catalogue." .
+
+da:CoreCourse a owl:Class ;
+    rdfs:label "Core Course" ;
+    rdfs:subClassOf da:Course ;
+    rdfs:comment "A mandatory course in a program." .
+
+da:ElectiveCourse a owl:Class ;
+    rdfs:label "Elective Course" ;
+    rdfs:subClassOf da:Course ;
+    rdfs:comment "An optional course in a program." .
+
+da:Semester a owl:Class ;
+    rdfs:label "Semester" ;
+    rdfs:comment "A teaching term." .
+
+da:Enrollment a owl:Class ;
+    rdfs:label "Enrollment" ;
+    rdfs:comment "One student taking one course in one semester; carries the grade." .
+
+da:Requirement a owl:Class ;
+    rdfs:label "Requirement" ;
+    rdfs:comment "A rule block of a program, for example core credits." .
+
+da:ProbationStudent a owl:Class ;
+    rdfs:label "Probation Student" ;
+    rdfs:subClassOf da:Student ;
+    rdfs:comment "Defined class: a student with CGPA below 2.0." .
+
+da:DeansListStudent a owl:Class ;
+    rdfs:label "Dean's List Student" ;
+    rdfs:subClassOf da:Student ;
+    rdfs:comment "Defined class: a student with CGPA of at least 3.5." .
+
+da:AtRiskStudent a owl:Class ;
+    rdfs:label "At Risk Student" ;
+    rdfs:subClassOf da:Student ;
+    rdfs:comment "Defined class: a student with CGPA from 2.0 up to (not including) 2.5." .
+
+da:GraduationEligibleStudent a owl:Class ;
+    rdfs:label "Graduation Eligible Student" ;
+    rdfs:subClassOf da:Student ;
+    rdfs:comment "Defined class: a student with CGPA of at least 2.0 and at least 130 earned credits." .
+
+# Pairwise disjointness of the top-level concepts.
+[] a owl:AllDisjointClasses ;
+    owl:members ( da:Person da:Department da:Program da:Course da:Semester da:Enrollment da:Requirement ) .
+
+da:Student owl:disjointWith da:Advisor .
+da:CoreCourse owl:disjointWith da:ElectiveCourse .
+
+############################################################
+# Defined classes (Equivalent To expressions)
+############################################################
+
+da:ProbationStudent owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        da:Student
+        [ a owl:Restriction ;
+          owl:onProperty da:cgpa ;
+          owl:someValuesFrom [
+              a rdfs:Datatype ;
+              owl:onDatatype xsd:decimal ;
+              owl:withRestrictions ( [ xsd:maxExclusive "2.0"^^xsd:decimal ] )
+          ]
+        ]
+    )
+] .
+
+da:AtRiskStudent owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        da:Student
+        [ a owl:Restriction ;
+          owl:onProperty da:cgpa ;
+          owl:someValuesFrom [
+              a rdfs:Datatype ;
+              owl:onDatatype xsd:decimal ;
+              owl:withRestrictions (
+                  [ xsd:minInclusive "2.0"^^xsd:decimal ]
+                  [ xsd:maxExclusive "2.5"^^xsd:decimal ]
+              )
+          ]
+        ]
+    )
+] .
+
+da:DeansListStudent owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        da:Student
+        [ a owl:Restriction ;
+          owl:onProperty da:cgpa ;
+          owl:someValuesFrom [
+              a rdfs:Datatype ;
+              owl:onDatatype xsd:decimal ;
+              owl:withRestrictions ( [ xsd:minInclusive "3.5"^^xsd:decimal ] )
+          ]
+        ]
+    )
+] .
+
+da:GraduationEligibleStudent owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        da:Student
+        [ a owl:Restriction ;
+          owl:onProperty da:cgpa ;
+          owl:someValuesFrom [
+              a rdfs:Datatype ;
+              owl:onDatatype xsd:decimal ;
+              owl:withRestrictions ( [ xsd:minInclusive "2.0"^^xsd:decimal ] )
+          ]
+        ]
+        [ a owl:Restriction ;
+          owl:onProperty da:totalCreditsEarned ;
+          owl:someValuesFrom [
+              a rdfs:Datatype ;
+              owl:onDatatype xsd:integer ;
+              owl:withRestrictions ( [ xsd:minInclusive "130"^^xsd:integer ] )
+          ]
+        ]
+    )
+] .
+
+############################################################
+# Object properties (19)
+############################################################
+
+da:hasAdvisor a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:label "has advisor" ;
+    rdfs:domain da:Student ;
+    rdfs:range da:Advisor ;
+    owl:inverseOf da:advises ;
+    rdfs:comment "Links a student to their academic advisor." .
+
+da:advises a owl:ObjectProperty ;
+    rdfs:label "advises" ;
+    rdfs:domain da:Advisor ;
+    rdfs:range da:Student ;
+    owl:inverseOf da:hasAdvisor ;
+    rdfs:comment "Links an advisor to the students they advise." .
+
+da:enrolledInProgram a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:label "enrolled in program" ;
+    rdfs:domain da:Student ;
+    rdfs:range da:Program ;
+    rdfs:comment "The degree program a student is enrolled in." .
+
+da:worksIn a owl:ObjectProperty ;
+    rdfs:label "works in" ;
+    rdfs:domain da:Advisor ;
+    rdfs:range da:Department ;
+    rdfs:comment "The department an advisor works in." .
+
+da:managedBy a owl:ObjectProperty ;
+    rdfs:label "managed by" ;
+    rdfs:domain da:Program ;
+    rdfs:range da:Department ;
+    rdfs:comment "The department that manages a program." .
+
+da:offeredBy a owl:ObjectProperty ;
+    rdfs:label "offered by" ;
+    rdfs:domain da:Course ;
+    rdfs:range da:Department ;
+    rdfs:comment "The department that offers a course." .
+
+da:includesCourse a owl:ObjectProperty ;
+    rdfs:label "includes course" ;
+    rdfs:domain da:Program ;
+    rdfs:range da:Course ;
+    rdfs:comment "A course that belongs to a program." .
+
+da:hasRequirement a owl:ObjectProperty ;
+    rdfs:label "has requirement" ;
+    rdfs:domain da:Program ;
+    rdfs:range da:Requirement ;
+    rdfs:comment "A requirement block of a program." .
+
+da:satisfiedByCourse a owl:ObjectProperty ;
+    rdfs:label "satisfied by course" ;
+    rdfs:domain da:Requirement ;
+    rdfs:range da:Course ;
+    rdfs:comment "A course that can satisfy a requirement." .
+
+da:requiresCourse a owl:ObjectProperty, owl:TransitiveProperty ;
+    rdfs:label "requires course" ;
+    rdfs:domain da:Course ;
+    rdfs:range da:Course ;
+    rdfs:comment "Transitive prerequisite relation between courses." .
+
+da:hasPrerequisite a owl:ObjectProperty, owl:AsymmetricProperty ;
+    rdfs:label "has prerequisite" ;
+    rdfs:subPropertyOf da:requiresCourse ;
+    rdfs:domain da:Course ;
+    rdfs:range da:Course ;
+    rdfs:comment "Direct prerequisite of a course. The reasoner derives the transitive chain through requiresCourse." .
+
+da:hasEnrollment a owl:ObjectProperty ;
+    rdfs:label "has enrollment" ;
+    rdfs:domain da:Student ;
+    rdfs:range da:Enrollment ;
+    owl:inverseOf da:enrollmentOf ;
+    rdfs:comment "Links a student to one of their enrollments." .
+
+da:enrollmentOf a owl:ObjectProperty ;
+    rdfs:label "enrollment of" ;
+    rdfs:domain da:Enrollment ;
+    rdfs:range da:Student ;
+    owl:inverseOf da:hasEnrollment ;
+    rdfs:comment "Links an enrollment to its student." .
+
+da:forCourse a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:label "for course" ;
+    rdfs:domain da:Enrollment ;
+    rdfs:range da:Course ;
+    rdfs:comment "The course of an enrollment." .
+
+da:inSemester a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:label "in semester" ;
+    rdfs:domain da:Enrollment ;
+    rdfs:range da:Semester ;
+    rdfs:comment "The semester of an enrollment." .
+
+da:hasCompleted a owl:ObjectProperty ;
+    rdfs:label "has completed" ;
+    rdfs:domain da:Student ;
+    rdfs:range da:Course ;
+    rdfs:comment "Inferred by rule R1 when an enrollment was passed." .
+
+da:mustRetake a owl:ObjectProperty ;
+    rdfs:label "must retake" ;
+    rdfs:domain da:Student ;
+    rdfs:range da:Course ;
+    rdfs:comment "Inferred by rule R2 when an enrollment was failed." .
+
+da:needsAdvisorMeeting a owl:ObjectProperty ;
+    rdfs:label "needs advisor meeting" ;
+    rdfs:domain da:Student ;
+    rdfs:range da:Advisor ;
+    rdfs:comment "Inferred by rule R3 for students on probation." .
+
+da:affiliatedWith a owl:ObjectProperty ;
+    rdfs:label "affiliated with" ;
+    rdfs:domain da:Student ;
+    rdfs:range da:Department ;
+    rdfs:comment "Inferred by rule R4 through the student's advisor." .
+
+############################################################
+# Data properties (13)
+############################################################
+
+da:fullName a owl:DatatypeProperty ;
+    rdfs:label "full name" ;
+    rdfs:domain da:Person ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Display name of a person." .
+
+da:studentId a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:label "student ID" ;
+    rdfs:domain da:Student ;
+    rdfs:range xsd:string ;
+    rdfs:comment "University identifier of a student." .
+
+da:cgpa a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:label "CGPA" ;
+    rdfs:domain da:Student ;
+    rdfs:range xsd:decimal ;
+    rdfs:comment "Cumulative grade point average on a 4.0 scale." .
+
+da:totalCreditsEarned a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:label "total credits earned" ;
+    rdfs:domain da:Student ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "Credits earned so far." .
+
+da:courseCode a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:label "course code" ;
+    rdfs:domain da:Course ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Catalogue code such as PF101." .
+
+da:courseTitle a owl:DatatypeProperty ;
+    rdfs:label "course title" ;
+    rdfs:domain da:Course ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Course title." .
+
+da:creditHours a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:label "credit hours" ;
+    rdfs:domain da:Course ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "Credit hours of a course." .
+
+da:letterGrade a owl:DatatypeProperty ;
+    rdfs:label "letter grade" ;
+    rdfs:domain da:Enrollment ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Letter grade of an enrollment." .
+
+da:passed a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:label "passed" ;
+    rdfs:domain da:Enrollment ;
+    rdfs:range xsd:boolean ;
+    rdfs:comment "Whether the enrollment was passed." .
+
+da:minCgpaToGraduate a owl:DatatypeProperty ;
+    rdfs:label "minimum CGPA to graduate" ;
+    rdfs:domain da:Program ;
+    rdfs:range xsd:decimal ;
+    rdfs:comment "Program graduation threshold for CGPA." .
+
+da:minCreditsToGraduate a owl:DatatypeProperty ;
+    rdfs:label "minimum credits to graduate" ;
+    rdfs:domain da:Program ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "Program graduation threshold for credits." .
+
+da:requiredCredits a owl:DatatypeProperty ;
+    rdfs:label "required credits" ;
+    rdfs:domain da:Requirement ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "Credits required by a requirement block." .
+
+da:semesterName a owl:DatatypeProperty ;
+    rdfs:label "semester name" ;
+    rdfs:domain da:Semester ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Human-readable semester name." .
+
+############################################################
+# Individuals: department, program, requirements, semesters
+############################################################
+
+da:Dept_ComputerScience a owl:NamedIndividual, da:Department ;
+    rdfs:label "Department of Computer Science" .
+
+da:Program_BSAI a owl:NamedIndividual, da:Program ;
+    rdfs:label "BS Artificial Intelligence" ;
+    da:minCreditsToGraduate 130 ;
+    da:minCgpaToGraduate "2.0"^^xsd:decimal ;
+    da:managedBy da:Dept_ComputerScience ;
+    da:hasRequirement da:Req_Core, da:Req_Elective ;
+    da:includesCourse da:PF101, da:OOP201, da:DS301, da:DB301, da:AI401,
+        da:MATH101, da:LA201, da:ML402, da:ETH101, da:NLP410 .
+
+da:Req_Core a owl:NamedIndividual, da:Requirement ;
+    rdfs:label "Core requirement" ;
+    da:requiredCredits 24 ;
+    da:satisfiedByCourse da:PF101, da:OOP201, da:DS301, da:DB301,
+        da:AI401, da:MATH101, da:LA201, da:ML402 .
+
+da:Req_Elective a owl:NamedIndividual, da:Requirement ;
+    rdfs:label "Elective requirement" ;
+    da:requiredCredits 3 ;
+    da:satisfiedByCourse da:ETH101, da:NLP410 .
+
+da:Sem_Fall2024 a owl:NamedIndividual, da:Semester ;
+    da:semesterName "Fall 2024" .
+
+da:Sem_Spring2025 a owl:NamedIndividual, da:Semester ;
+    da:semesterName "Spring 2025" .
+
+da:Sem_Fall2025 a owl:NamedIndividual, da:Semester ;
+    da:semesterName "Fall 2025" .
+
+############################################################
+# Individuals: advisors
+############################################################
+
+da:Advisor_Khan a owl:NamedIndividual, da:Advisor ;
+    da:fullName "Khan" ;
+    da:worksIn da:Dept_ComputerScience .
+
+da:Advisor_Siddiqui a owl:NamedIndividual, da:Advisor ;
+    da:fullName "Siddiqui" ;
+    da:worksIn da:Dept_ComputerScience .
+
+############################################################
+# Individuals: courses (10)
+############################################################
+
+da:PF101 a owl:NamedIndividual, da:CoreCourse ;
+    rdfs:label "Programming Fundamentals" ;
+    da:courseCode "PF101" ;
+    da:courseTitle "Programming Fundamentals" ;
+    da:creditHours 3 ;
+    da:offeredBy da:Dept_ComputerScience .
+
+da:OOP201 a owl:NamedIndividual, da:CoreCourse ;
+    rdfs:label "Object-Oriented Programming" ;
+    da:courseCode "OOP201" ;
+    da:courseTitle "Object-Oriented Programming" ;
+    da:creditHours 3 ;
+    da:offeredBy da:Dept_ComputerScience ;
+    da:hasPrerequisite da:PF101 .
+
+da:DS301 a owl:NamedIndividual, da:CoreCourse ;
+    rdfs:label "Data Structures" ;
+    da:courseCode "DS301" ;
+    da:courseTitle "Data Structures" ;
+    da:creditHours 3 ;
+    da:offeredBy da:Dept_ComputerScience ;
+    da:hasPrerequisite da:OOP201 .
+
+da:DB301 a owl:NamedIndividual, da:CoreCourse ;
+    rdfs:label "Databases" ;
+    da:courseCode "DB301" ;
+    da:courseTitle "Databases" ;
+    da:creditHours 3 ;
+    da:offeredBy da:Dept_ComputerScience ;
+    da:hasPrerequisite da:OOP201 .
+
+da:AI401 a owl:NamedIndividual, da:CoreCourse ;
+    rdfs:label "Introduction to AI" ;
+    da:courseCode "AI401" ;
+    da:courseTitle "Introduction to AI" ;
+    da:creditHours 3 ;
+    da:offeredBy da:Dept_ComputerScience ;
+    da:hasPrerequisite da:DS301 .
+
+da:MATH101 a owl:NamedIndividual, da:CoreCourse ;
+    rdfs:label "Calculus" ;
+    da:courseCode "MATH101" ;
+    da:courseTitle "Calculus" ;
+    da:creditHours 3 ;
+    da:offeredBy da:Dept_ComputerScience .
+
+da:LA201 a owl:NamedIndividual, da:CoreCourse ;
+    rdfs:label "Linear Algebra" ;
+    da:courseCode "LA201" ;
+    da:courseTitle "Linear Algebra" ;
+    da:creditHours 3 ;
+    da:offeredBy da:Dept_ComputerScience ;
+    da:hasPrerequisite da:MATH101 .
+
+da:ML402 a owl:NamedIndividual, da:CoreCourse ;
+    rdfs:label "Machine Learning" ;
+    da:courseCode "ML402" ;
+    da:courseTitle "Machine Learning" ;
+    da:creditHours 3 ;
+    da:offeredBy da:Dept_ComputerScience ;
+    da:hasPrerequisite da:AI401, da:LA201 .
+
+da:ETH101 a owl:NamedIndividual, da:ElectiveCourse ;
+    rdfs:label "Ethics in Computing" ;
+    da:courseCode "ETH101" ;
+    da:courseTitle "Ethics in Computing" ;
+    da:creditHours 2 ;
+    da:offeredBy da:Dept_ComputerScience .
+
+da:NLP410 a owl:NamedIndividual, da:ElectiveCourse ;
+    rdfs:label "Natural Language Processing" ;
+    da:courseCode "NLP410" ;
+    da:courseTitle "Natural Language Processing" ;
+    da:creditHours 3 ;
+    da:offeredBy da:Dept_ComputerScience ;
+    da:hasPrerequisite da:ML402 .
+
+############################################################
+# Individuals: students (5)
+############################################################
+
+da:Student_Ayesha a owl:NamedIndividual, da:Student ;
+    da:fullName "Ayesha" ;
+    da:studentId "S001" ;
+    da:cgpa "3.7"^^xsd:decimal ;
+    da:totalCreditsEarned 96 ;
+    da:hasAdvisor da:Advisor_Khan ;
+    da:enrolledInProgram da:Program_BSAI ;
+    da:hasEnrollment da:Enr_Ayesha_PF101, da:Enr_Ayesha_OOP201,
+        da:Enr_Ayesha_DS301, da:Enr_Ayesha_MATH101 .
+
+da:Student_Bilal a owl:NamedIndividual, da:Student ;
+    da:fullName "Bilal" ;
+    da:studentId "S002" ;
+    da:cgpa "1.8"^^xsd:decimal ;
+    da:totalCreditsEarned 60 ;
+    da:hasAdvisor da:Advisor_Khan ;
+    da:enrolledInProgram da:Program_BSAI ;
+    da:hasEnrollment da:Enr_Bilal_PF101, da:Enr_Bilal_MATH101 .
+
+da:Student_Hina a owl:NamedIndividual, da:Student ;
+    da:fullName "Hina" ;
+    da:studentId "S003" ;
+    da:cgpa "2.3"^^xsd:decimal ;
+    da:totalCreditsEarned 120 ;
+    da:hasAdvisor da:Advisor_Siddiqui ;
+    da:enrolledInProgram da:Program_BSAI ;
+    da:hasEnrollment da:Enr_Hina_PF101, da:Enr_Hina_OOP201, da:Enr_Hina_DS301 .
+
+da:Student_Zain a owl:NamedIndividual, da:Student ;
+    da:fullName "Zain" ;
+    da:studentId "S004" ;
+    da:cgpa "3.0"^^xsd:decimal ;
+    da:totalCreditsEarned 132 ;
+    da:hasAdvisor da:Advisor_Siddiqui ;
+    da:enrolledInProgram da:Program_BSAI .
+
+da:Student_Maryam a owl:NamedIndividual, da:Student ;
+    da:fullName "Maryam" ;
+    da:studentId "S005" ;
+    da:cgpa "3.9"^^xsd:decimal ;
+    da:totalCreditsEarned 30 ;
+    da:hasAdvisor da:Advisor_Siddiqui ;
+    da:enrolledInProgram da:Program_BSAI ;
+    da:hasEnrollment da:Enr_Maryam_PF101, da:Enr_Maryam_MATH101 .
+
+############################################################
+# Individuals: enrollments (11)
+############################################################
+
+da:Enr_Ayesha_PF101 a owl:NamedIndividual, da:Enrollment ;
+    da:enrollmentOf da:Student_Ayesha ;
+    da:forCourse da:PF101 ;
+    da:inSemester da:Sem_Fall2024 ;
+    da:letterGrade "A" ;
+    da:passed true .
+
+da:Enr_Ayesha_OOP201 a owl:NamedIndividual, da:Enrollment ;
+    da:enrollmentOf da:Student_Ayesha ;
+    da:forCourse da:OOP201 ;
+    da:inSemester da:Sem_Spring2025 ;
+    da:letterGrade "A-" ;
+    da:passed true .
+
+da:Enr_Ayesha_DS301 a owl:NamedIndividual, da:Enrollment ;
+    da:enrollmentOf da:Student_Ayesha ;
+    da:forCourse da:DS301 ;
+    da:inSemester da:Sem_Fall2025 ;
+    da:letterGrade "B+" ;
+    da:passed true .
+
+da:Enr_Ayesha_MATH101 a owl:NamedIndividual, da:Enrollment ;
+    da:enrollmentOf da:Student_Ayesha ;
+    da:forCourse da:MATH101 ;
+    da:inSemester da:Sem_Fall2024 ;
+    da:letterGrade "A" ;
+    da:passed true .
+
+da:Enr_Bilal_PF101 a owl:NamedIndividual, da:Enrollment ;
+    da:enrollmentOf da:Student_Bilal ;
+    da:forCourse da:PF101 ;
+    da:inSemester da:Sem_Fall2024 ;
+    da:letterGrade "F" ;
+    da:passed false .
+
+da:Enr_Bilal_MATH101 a owl:NamedIndividual, da:Enrollment ;
+    da:enrollmentOf da:Student_Bilal ;
+    da:forCourse da:MATH101 ;
+    da:inSemester da:Sem_Fall2024 ;
+    da:letterGrade "C" ;
+    da:passed true .
+
+da:Enr_Hina_PF101 a owl:NamedIndividual, da:Enrollment ;
+    da:enrollmentOf da:Student_Hina ;
+    da:forCourse da:PF101 ;
+    da:inSemester da:Sem_Fall2024 ;
+    da:letterGrade "B" ;
+    da:passed true .
+
+da:Enr_Hina_OOP201 a owl:NamedIndividual, da:Enrollment ;
+    da:enrollmentOf da:Student_Hina ;
+    da:forCourse da:OOP201 ;
+    da:inSemester da:Sem_Spring2025 ;
+    da:letterGrade "C" ;
+    da:passed true .
+
+da:Enr_Hina_DS301 a owl:NamedIndividual, da:Enrollment ;
+    da:enrollmentOf da:Student_Hina ;
+    da:forCourse da:DS301 ;
+    da:inSemester da:Sem_Fall2025 ;
+    da:letterGrade "F" ;
+    da:passed false .
+
+da:Enr_Maryam_PF101 a owl:NamedIndividual, da:Enrollment ;
+    da:enrollmentOf da:Student_Maryam ;
+    da:forCourse da:PF101 ;
+    da:inSemester da:Sem_Fall2025 ;
+    da:letterGrade "A" ;
+    da:passed true .
+
+da:Enr_Maryam_MATH101 a owl:NamedIndividual, da:Enrollment ;
+    da:enrollmentOf da:Student_Maryam ;
+    da:forCourse da:MATH101 ;
+    da:inSemester da:Sem_Fall2025 ;
+    da:letterGrade "A" ;
+    da:passed true .
+
+############################################################
+# SWRL rules (R1-R4)
+############################################################
+
+da:RuleR1 a swrl:Imp ;
+    rdfs:label "R1: passed enrollment means completed course" ;
+    swrl:body (
+        [ a swrl:ClassAtom ;
+          swrl:argument1 da:r1_s ;
+          swrl:classPredicate da:Student ]
+        [ a swrl:IndividualPropertyAtom ;
+          swrl:argument1 da:r1_s ;
+          swrl:argument2 da:r1_e ;
+          swrl:propertyPredicate da:hasEnrollment ]
+        [ a swrl:DatavaluedPropertyAtom ;
+          swrl:argument1 da:r1_e ;
+          swrl:argument2 true ;
+          swrl:propertyPredicate da:passed ]
+        [ a swrl:IndividualPropertyAtom ;
+          swrl:argument1 da:r1_e ;
+          swrl:argument2 da:r1_c ;
+          swrl:propertyPredicate da:forCourse ]
+    ) ;
+    swrl:head (
+        [ a swrl:IndividualPropertyAtom ;
+          swrl:argument1 da:r1_s ;
+          swrl:argument2 da:r1_c ;
+          swrl:propertyPredicate da:hasCompleted ]
+    ) .
+
+da:RuleR2 a swrl:Imp ;
+    rdfs:label "R2: failed enrollment means course must be retaken" ;
+    swrl:body (
+        [ a swrl:ClassAtom ;
+          swrl:argument1 da:r2_s ;
+          swrl:classPredicate da:Student ]
+        [ a swrl:IndividualPropertyAtom ;
+          swrl:argument1 da:r2_s ;
+          swrl:argument2 da:r2_e ;
+          swrl:propertyPredicate da:hasEnrollment ]
+        [ a swrl:DatavaluedPropertyAtom ;
+          swrl:argument1 da:r2_e ;
+          swrl:argument2 false ;
+          swrl:propertyPredicate da:passed ]
+        [ a swrl:IndividualPropertyAtom ;
+          swrl:argument1 da:r2_e ;
+          swrl:argument2 da:r2_c ;
+          swrl:propertyPredicate da:forCourse ]
+    ) ;
+    swrl:head (
+        [ a swrl:IndividualPropertyAtom ;
+          swrl:argument1 da:r2_s ;
+          swrl:argument2 da:r2_c ;
+          swrl:propertyPredicate da:mustRetake ]
+    ) .
+
+da:RuleR3 a swrl:Imp ;
+    rdfs:label "R3: probation student needs an advisor meeting" ;
+    swrl:body (
+        [ a swrl:ClassAtom ;
+          swrl:argument1 da:r3_s ;
+          swrl:classPredicate da:ProbationStudent ]
+        [ a swrl:IndividualPropertyAtom ;
+          swrl:argument1 da:r3_s ;
+          swrl:argument2 da:r3_a ;
+          swrl:propertyPredicate da:hasAdvisor ]
+    ) ;
+    swrl:head (
+        [ a swrl:IndividualPropertyAtom ;
+          swrl:argument1 da:r3_s ;
+          swrl:argument2 da:r3_a ;
+          swrl:propertyPredicate da:needsAdvisorMeeting ]
+    ) .
+
+da:RuleR4 a swrl:Imp ;
+    rdfs:label "R4: student is affiliated with the advisor's department" ;
+    swrl:body (
+        [ a swrl:ClassAtom ;
+          swrl:argument1 da:r4_s ;
+          swrl:classPredicate da:Student ]
+        [ a swrl:IndividualPropertyAtom ;
+          swrl:argument1 da:r4_s ;
+          swrl:argument2 da:r4_a ;
+          swrl:propertyPredicate da:hasAdvisor ]
+        [ a swrl:IndividualPropertyAtom ;
+          swrl:argument1 da:r4_a ;
+          swrl:argument2 da:r4_d ;
+          swrl:propertyPredicate da:worksIn ]
+    ) ;
+    swrl:head (
+        [ a swrl:IndividualPropertyAtom ;
+          swrl:argument1 da:r4_s ;
+          swrl:argument2 da:r4_d ;
+          swrl:propertyPredicate da:affiliatedWith ]
+    ) .
+
+da:r1_s a swrl:Variable . da:r1_e a swrl:Variable . da:r1_c a swrl:Variable .
+da:r2_s a swrl:Variable . da:r2_e a swrl:Variable . da:r2_c a swrl:Variable .
+da:r3_s a swrl:Variable . da:r3_a a swrl:Variable .
+da:r4_s a swrl:Variable . da:r4_a a swrl:Variable . da:r4_d a swrl:Variable .
