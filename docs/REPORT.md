@@ -218,4 +218,24 @@ Screenshots are in `docs/screenshots/`.
   assertions. SWRL execution is provided by the SWRLTab rule engine.
 - The Gemini agent requires a free API key. Without a key, the other six pages
   remain fully functional.
-- The illustrative course data is not a real university catalog.
+- The illustrative course data in the ontology is not a real university catalog.
+
+## 8. Personalized UCP degree audit
+
+The app now supports a personal UCP profile stored in `data/my_profile.json`
+(ignored by git):
+
+- **Overview**: name, roll number, program, semester, CGPA; saved locally and reused by every page.
+- **My Courses**: add UCP catalog or custom courses with grades and terms. Grades D or better count as passed; F must be retaken. Prerequisite gaps are shown for completed courses.
+- **Course Planner**: search or type UCP course codes for all five IT programs. Shows credits, category, prerequisite chain, missing prerequisites, unlocks, and add/remove from plan.
+- **Standing and Alerts**: computed from profile CGPA and credits passed. Dean's List at CGPA >= 3.5; graduation eligible at CGPA >= 2.0 with program credits met.
+- **Ask the Agent**: strictly UCP-scoped. Supports BSCS, BSDS, BSSE, BSAI, and BSCY. Uses catalog/profile/tools first and Google Search grounding for official UCP sources.
+- **Ontology Explorer**: includes a live personalized RDF graph (`audit/live_graph.py`) overlaying the catalog and profile on the base ontology.
+
+New layers:
+- `audit/catalog.py`: `data/ucp_catalog.json` with 125 indicative UCP IT courses across five programs, prerequisite chains, unlocks, grade verification, and `search_ucp_web`.
+- `audit/profile.py`: persistent profile, course records, standing, eligibility, and planner explanations.
+- `audit/live_graph.py`: in-memory personalized RDF graph for explorer metrics and triples.
+- `agent/agent.py`: UCP-scoped Gemini agent with profile, catalog, planning, and web-search tools.
+
+The catalog is indicative, compiled from published UCP roadmaps; course offerings, prerequisites, and credit totals can change, so final audits should be confirmed with the UCP department. The base ontology, seven MCP tools, and CQ1-CQ8 results remain unchanged.

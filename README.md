@@ -61,18 +61,25 @@ competency-question runner.
 
 ```text
 cp3-degree-audit/
+├── data/
+│   ├── ucp_catalog.json        Indicative UCP IT course catalog (125 courses, 5 programs)
+│   ├── custom_courses.json     User-added courses (ignored by git)
+│   └── my_profile.json         Saved personal profile (ignored by git)
 ├── ontology/
 │   ├── degree_audit.ttl        OWL ontology (Turtle, with SWRL rules)
 │   ├── degree_audit.owl        Same ontology as RDF/XML for Protégé
 │   └── queries.rq              CQ1-CQ8 with expected results
 ├── audit/
 │   ├── config.py               .env loading and llm_ready()
-│   └── queries.py              SPARQL data layer (seven agent tools + page helpers)
+│   ├── queries.py              SPARQL data layer (base ontology tools + page helpers)
+│   ├── catalog.py              UCP catalog, prerequisites, grade verification, web search
+│   ├── profile.py              Persistent personal profile, courses, standing, planner helpers
+│   └── live_graph.py           In-memory personalized RDF graph for the explorer
 ├── agent/
-│   ├── agent.py                Gemini function-calling agent
-│   └── mcp_server.py           FastMCP server exposing the seven tools
+│   ├── agent.py                Gemini UCP-scoped agent with catalog/profile/web tools
+│   └── mcp_server.py           FastMCP server exposing the seven base ontology tools
 ├── app/
-│   ├── app.py                  Streamlit app (seven missions)
+│   ├── app.py                  Streamlit app (personalized seven missions)
 │   └── style.css               Blue game-style theme
 ├── scripts/
 │   └── run_queries.py          Runs CQ1-CQ8 and prints results
@@ -96,16 +103,26 @@ cp3-degree-audit/
 
 | # | Page | What it shows | Data source |
 |---|------|---------------|-------------|
-| 1 | Overview | Player profile form and CGPA, credits earned, credits remaining, standing | `get_student_summary`, `get_credits_remaining` |
-| 2 | My Courses | Passed courses with grades and terms; failed courses flagged as retakes | `get_completed_courses`, `get_courses_to_retake` |
-| 3 | Course Planner | Courses unlocked next; picker explains what blocks a course | `get_next_eligible_courses`, `get_prerequisite_chain` |
-| 4 | Prerequisite Map | Graph of all courses and prerequisites, coloured by status | prerequisite triples, `st.graphviz_chart` |
-| 5 | Standing and Alerts | Standing badge, advisor card and probation watchlist | `get_standing`, advisor lookup |
-| 6 | Ask the Agent | Chat with the Gemini Degree Audit Assistant | `agent/agent.py` |
-| 7 | Ontology Explorer | Measured class/property counts and live CQ1-CQ8 results | `audit/queries.py` |
+| 1 | Overview | Editable personal profile: name, roll number, UCP program, semester, CGPA; credits passed/remaining and standing | `audit/profile.py`, `audit/catalog.py` |
+| 2 | My Courses | Add verified UCP courses with grades and terms; passed/failed/in-progress lists; prerequisite gaps; remove or clear courses | `profile.add_course`, `catalog.verify_grade`, `catalog.prerequisite_chain` |
+| 3 | Course Planner | Searchable UCP catalog (type or choose), course metadata, prerequisite chain, missing prerequisites, unlocks, add/remove from plan | `catalog.search_courses`, `profile.plan_course` |
+| 4 | Prerequisite Map | Course prerequisite graph for your program or all UCP IT courses, colored by your personal progress | `catalog.prerequisite_edges`, profile status |
+| 5 | Standing and Alerts | Dean's List, probation/at-risk, graduation-eligible, progress bar, thresholds and prerequisite gaps | `profile.summary`, `profile.get_my_standing` |
+| 6 | Ask the Agent | UCP-only chat: programs, courses, prerequisites, credits, standing, profile, and Google Search for official UCP sources | `agent/agent.py`, `audit/catalog.py` |
+| 7 | Ontology Explorer | Base ontology metrics/properties/CQs, live personalized RDF graph, UCP catalog summaries and search | `audit/queries.py`, `audit/live_graph.py`, `audit/catalog.py` |
 
-The selected student is stored in `st.session_state` and reused by every page.
-All numbers come from SPARQL queries; nothing is hard-coded in the UI.
+Your personal profile is stored in `data/my_profile.json`; user-added catalog courses are stored in `data/custom_courses.json`. Both are ignored by git. The base ontology, CP3 competency questions, seven MCP tools, and CQ1-CQ8 results remain unchanged for the original ontology deliverable.
+
+## Personalization and UCP catalog
+
+- **Overview**: enter or edit your name, roll number, program, semester, and CGPA. Save once; every page uses your profile.
+- **My Courses**: choose a UCP catalog course or add a custom course, select a grade and term, then verify and add. Grades D or better count as passed; F must be retaken.
+- **Course Planner**: search or type UCP course codes across all five IT programs. See credits, category, direct and full prerequisite chains, missing prerequisites, and courses the selected course unlocks. Add courses to your plan.
+- **Standing and Alerts**: standing is computed from your profile CGPA and credits passed. Dean's List requires CGPA >= 3.5; graduation eligible requires CGPA >= 2.0 and credits passed meeting the program total.
+- **Ask the Agent**: answers UCP questions only and can use Google Search for official UCP sources.
+- **Ontology Explorer**: shows the base ontology plus a live personalized RDF graph with your profile and courses.
+
+The catalog in `data/ucp_catalog.json` is indicative and compiled from published UCP roadmaps; confirm final requirements with your department.
 
 ---
 
@@ -170,24 +187,32 @@ in the app.
 
 ## Agent tools
 
-The MCP server and Gemini agent expose the same seven fixed, parameterised
-queries from `audit/queries.py`:
+The MCP server still exposes the seven base ontology tools from `audit/queries.py`.
+The Gemini agent adds UCP personalization tools and operates strictly inside
+University of Central Punjab academic scope:
 
 | Tool | Input | Returns |
 |------|-------|---------|
-| `get_student_summary` | student | CGPA, credits, standing, advisor |
-| `get_completed_courses` | student | Passed course codes |
-| `get_next_eligible_courses` | student | Courses whose direct prerequisites are all passed |
-| `get_prerequisite_chain` | course code | All direct and indirect prerequisites |
-| `get_credits_remaining` | student | Credits still needed |
-| `get_standing` | student | Standing label from the section 3.2 thresholds |
-| `get_courses_to_retake` | student | Failed course codes |
+| `get_my_profile` | none | Name, roll number, program, semester, CGPA |
+| `get_my_courses` | none | Recorded courses with grades, terms and pass status |
+| `get_my_standing` | none | Standing, CGPA, credits passed/required |
+| `get_my_remaining_credits` | none | Credits remaining to graduate |
+| `get_my_eligible_courses` | none | UCP courses whose prerequisites are passed |
+| `plan_ucp_course` | course code | Locked/ready/retake state, missing prerequisites, unlocks |
+| `search_ucp_courses` | query, program | Matching UCP catalog courses |
+| `get_ucp_course_details` | course code | Course title, credits, category, prerequisites |
+| `verify_ucp_grade` | course code, grade | Pass/fail and credit eligibility for the grade |
+| `search_ucp_web` | query | Official UCP information via Google Search grounding |
+
+Supported UCP IT degrees: BS Computer Science, BS Data Science, BS Software
+Engineering, BS Artificial Intelligence, and BS Cyber Security.
 
 Guardrails:
 
-- The agent answers only from tool results and never writes SPARQL.
-- Inputs are resolved against known ontology identifiers before use.
-- Without a valid API key the app shows a friendly setup message.
+- The agent answers only UCP academic questions and politely refuses non-UCP topics.
+- It uses catalog/profile tools first; web search is used only for official UCP sources.
+- It never invents course codes, prerequisites, credit hours, grades, or rules.
+- Without a valid API key the app shows a friendly setup message; Google Search may also be limited by API quota.
 - The key lives in `.env`, which is ignored by git.
 
 Start the MCP server (optional):

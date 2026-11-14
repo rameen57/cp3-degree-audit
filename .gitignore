@@ -1,4 +1,8 @@
 .env
+.agents/
 .venv/
 __pycache__/
 *.pyc
+data/my_profile.json
+data/custom_courses.json
+data/*.tmp
